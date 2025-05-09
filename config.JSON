@@ -1,0 +1,44 @@
+{
+    "command_variable_substring": "????",
+    "scan_file_types": [".mov", ".mp4"],
+    "scan_directories": ["/Users/jaredpietrzak/Documents/MEDIA"],
+    "checks": [
+        {
+            "name": "Resolution",
+            "target": "1920,1080",
+            "command": "ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 ????"
+        },
+        {
+            "name": "Codec",
+            "target": "prores,HQ",
+            "command": "ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,profile -of csv=p=0 ????"
+
+        },
+	    {
+            "name": "Framerate (59.94 fps = 60 frames / 1.001 seconds",
+            "target": "60000/1001",
+            "command": "ffprobe -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of csv=p=0 ????"
+        },
+	    {
+            "name": "Field Order",
+            "target": "progressive",
+            "command": "ffprobe -v error -select_streams v:0 -show_entries stream=field_order -of csv=p=0 ????"
+        },
+	    {
+            "name": "Audio Sampling",
+            "target": "48000",
+            "command": "ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of csv=p=0 ????"
+        },
+        {
+            "name": "Audio Bit Rate (24 bits = (1152000 bits / second) / (1 second / 48000)",
+            "target": "1152000",
+            "command": "ffprobe -v error -select_streams a:0 -show_entries stream=bit_rate -of csv=p=0 ????"
+        },
+    	{
+            "name": "Audio Track Count",
+            "target": "1,2,3,4,5,6,7,8",
+            "command": "ffprobe -v error -select_streams a -show_entries stream=index -of compact=p=0:nk=1:item_sep=, ????"
+
+        }
+    ]
+}
